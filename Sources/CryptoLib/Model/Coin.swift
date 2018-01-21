@@ -4,7 +4,7 @@
 
 import Foundation
 
-class Coin {
+public class Coin {
     open var id: String
     open var name: String
 

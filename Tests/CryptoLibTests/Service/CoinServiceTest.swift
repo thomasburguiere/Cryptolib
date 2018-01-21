@@ -2,7 +2,7 @@ import XCTest
 @testable import CryptoLib
 
 class CoinServiceTest: XCTestCase {
-    func testList__returns_bitcoin() {
+    func testList_returns_bitcoin() {
         let service = CoinService()
         let actual: Array<Coin> = service.list()
 

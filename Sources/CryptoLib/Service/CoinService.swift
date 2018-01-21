@@ -7,7 +7,8 @@ import Foundation
 class CoinService {
 
     public func list() -> Array<Coin> {
-        let request = URLRequest(url: URL(string: "https://min-api.cryptocompare.com/data/all/coinlist")!)
+        let url = URL(string: "https://min-api.cryptocompare.com/data/all/coinlist")
+        let request = URLRequest(url: url!)
 
         var coinList = Array<Coin>()
 
