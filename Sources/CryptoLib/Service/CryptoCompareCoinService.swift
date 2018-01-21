@@ -42,7 +42,7 @@ public class CryptoCompareCoinService: CoinService {
             var result = Dictionary<String, Float>()
 
             for symbol: String in jsonData!.keys {
-                result[symbol] = jsonData![symbol] as! Float
+                result[symbol] = jsonData![symbol] as? Float
             }
 
             return result
