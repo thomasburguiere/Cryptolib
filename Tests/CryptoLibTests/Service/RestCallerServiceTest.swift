@@ -34,38 +34,4 @@ class RestCallerServiceTest: XCTestCase {
 
         self.wait(for: [ex], timeout: 1.0)
     }
-
-    func test_list_coins() {
-        let service = CryptoCompareRestCallerService()
-
-        let ex = self.expectation(description: "Fetching suecceds")
-        let actualObs = service.list()
-
-        actualObs.subscribe(onNext: { coinList in
-            XCTAssertTrue(!coinList.isEmpty)
-
-            let bitcoin: Coin? = coinList.first(where: { (coin: Coin) -> Bool in
-                return coin.name == "BTC"
-            })
-            XCTAssertNotNil(bitcoin)
-            ex.fulfill()
-        })
-
-        self.wait(for: [ex], timeout: 1.0)
-    }
-
-    func test_coin_price() {
-        let service = CryptoCompareRestCallerService()
-        let ex = self.expectation(description: "Fetching suecceds")
-
-        service.price(coin: Coin(id: "BTC", name: "BTC"), targets: [Coin(name: "EUR")]).subscribe(onNext: { priceData in
-            print(priceData)
-            XCTAssertNotNil(priceData["EUR"])
-            ex.fulfill()
-        })
-
-
-        self.wait(for: [ex], timeout: 1.0)
-    }
-
 }
