@@ -5,11 +5,15 @@
 import Foundation
 
 public class Coin {
-    open var id: String
+    open var id: String?
     open var name: String
 
     public init(id: String, name: String) {
         self.id = id
+        self.name = name
+    }
+
+    public init(name: String) {
         self.name = name
     }
 }
