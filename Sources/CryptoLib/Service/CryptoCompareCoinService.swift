@@ -14,7 +14,11 @@ fileprivate enum urls: String {
 public class CryptoCompareCoinService: CoinService {
 
     private static let listUrl = "https://min-api.cryptocompare.com/data/all/coinlist"
-    private let caller = RestCallerService()
+    private let caller: RestCallerService
+
+    public init(caller: RestCallerService) {
+        self.caller = caller
+    }
 
     public func list() -> Observable<Array<Coin>> {
         return self.caller.callJsonRESTAsync(url: urls.listCoin.rawValue).map({ (jsonData: Dictionary<String, Any>?) -> Array<Coin> in

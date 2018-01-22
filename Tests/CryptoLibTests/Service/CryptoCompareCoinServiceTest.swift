@@ -14,7 +14,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
 
 
     func test_list_coins() {
-        let service = CryptoCompareCoinService()
+        let service = CryptoCompareCoinService(caller: RestCallerService())
 
         let ex = self.expectation(description: "Fetching suecceds")
         let actualObs = service.list()
@@ -33,7 +33,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
     }
 
     func test_coin_price() {
-        let service = CryptoCompareCoinService()
+        let service = CryptoCompareCoinService(caller: RestCallerService())
         let ex = self.expectation(description: "Fetching suecceds")
 
         service.price(currency: Coin(id: "BTC", name: "BTC"), targets: [RealCurrency(name: "EUR")]).subscribe(onNext: { priceData in
