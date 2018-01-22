@@ -4,17 +4,15 @@
 
 import XCTest
 import RxSwift
-import RxTest
 
 @testable import CryptoLib
 
 
 class CryptoCompareCoinServiceTest: XCTestCase {
 
-
+    private let service = CryptoCompareCoinService(caller: RestCallerService())
 
     func test_list_coins() {
-        let service = CryptoCompareCoinService(caller: RestCallerService())
 
         let ex = self.expectation(description: "Fetching suecceds")
         let actualObs = service.list()
@@ -29,21 +27,21 @@ class CryptoCompareCoinServiceTest: XCTestCase {
             ex.fulfill()
         })
 
-        self.wait(for: [ex], timeout: 1.0)
+        self.wait(for: [ex], timeout: 2.0)
     }
 
     func test_coin_price() {
-        let service = CryptoCompareCoinService(caller: RestCallerService())
         let ex = self.expectation(description: "Fetching suecceds")
 
-        service.price(currency: Coin(id: "BTC", name: "BTC"), targets: [RealCurrency(name: "EUR")]).subscribe(onNext: { priceData in
+        let actualObservable = service.price(currency: Coin(id: "BTC", name: "BTC"), targets: [RealCurrency(name: "EUR")])
+        actualObservable.subscribe(onNext: { priceData in
             print(priceData)
             XCTAssertNotNil(priceData["EUR"])
             ex.fulfill()
         })
 
 
-        self.wait(for: [ex], timeout: 1.0)
+        self.wait(for: [ex], timeout: 2.0)
     }
 
 }

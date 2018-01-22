@@ -4,7 +4,6 @@
 
 import XCTest
 import RxSwift
-import RxTest
 
 @testable import CryptoLib
 
@@ -32,6 +31,6 @@ class RestCallerServiceTest: XCTestCase {
                 onDisposed: nil
         )
 
-        self.wait(for: [ex], timeout: 1.0)
+        self.wait(for: [ex], timeout: 2.0)
     }
 }
