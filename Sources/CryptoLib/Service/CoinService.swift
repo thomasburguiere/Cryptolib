@@ -5,7 +5,6 @@
 import RxSwift
 
 public protocol CoinService {
-
     func list() -> Observable<Array<Coin>>
     func price(currency: Currency, targets: Array<Currency>) -> Observable<Dictionary<String, Float>>
 }

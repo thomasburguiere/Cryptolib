@@ -4,7 +4,7 @@
 
 import Foundation
 
-public class Coin: Currency {
+public class Coin: Currency, JSONDecodable {
     open var id: String?
     open var name: String
 
@@ -14,6 +14,16 @@ public class Coin: Currency {
     }
 
     public init(name: String) {
+        self.name = name
+    }
+
+    required public init?(dictionary: JSONDictionary) {
+        guard let name = dictionary["Name"] as? String,
+              let id = dictionary["Id"] as? String
+                else {
+            return nil
+        }
+        self.id = id
         self.name = name
     }
 }
