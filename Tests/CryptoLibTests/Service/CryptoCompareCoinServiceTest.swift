@@ -41,7 +41,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
             XCTAssertTrue(coinList.isEmpty)
         })
 
-        callerMock.subject.on(Event.completed)
+        callerMock.resolve()
     }
 
     func test__mocked__list_returns_array_containing_only_valid_Coin_entries_in_Data_entry_in_json() {
@@ -64,7 +64,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
             XCTAssertEqual(coinList.first!.name, "valid")
         })
 
-        callerMock.subject.on(Event.completed)
+        callerMock.resolve()
     }
 
     func test_coin_price() {
@@ -82,11 +82,15 @@ class CryptoCompareCoinServiceTest: XCTestCase {
     }
 
     fileprivate class RestCallerMock: RestCallerService {
-        let subject: BehaviorSubject<JSONDictionary>
+        private let subject: BehaviorSubject<JSONDictionary>
 
         init(returnedJson jsonString: String) {
             let jsonDictionary = try? JSONSerialization.jsonObject(with: jsonString.data(using: String.Encoding.utf8)!) as? JSONDictionary
             self.subject = BehaviorSubject(value: jsonDictionary!!)
+        }
+        
+        func resolve() {
+            self.subject.on(.completed)
         }
 
         override func callJsonRESTAsync(url: String) -> Observable<JSONDictionary> {
