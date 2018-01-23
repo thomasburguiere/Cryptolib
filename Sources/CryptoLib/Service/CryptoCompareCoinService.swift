@@ -21,17 +21,20 @@ public class CryptoCompareCoinService: CoinService {
     }
 
     public func list() -> Observable<Array<Coin>> {
-        return self.caller.callJsonRESTAsync(url: urls.listCoin.rawValue).map({ (jsonData: Dictionary<String, Any>?) -> Array<Coin> in
+        return self.caller.callJsonRESTAsync(url: urls.listCoin.rawValue).map({ (jsonDictionary: JSONDictionary) -> Array<Coin> in
+
+            guard let coinData = jsonDictionary["Data"] as? JSONDictionary else {
+                return []
+            }
+
             var coins = Array<Coin>()
 
-            if let coinData = jsonData!["Data"] as! Dictionary<String, Any>? {
-                for jsonEntry in coinData.keys {
-                    let coinValue = coinData[jsonEntry]! as! Dictionary<String, Any>
-
-                    if let id = coinValue["Id"] as! String?, let name = coinValue["Name"] as! String? {
-                        coins.append(Coin(id: id, name: name))
-                    }
+            for key: String in coinData.keys {
+                if let coinValue = coinData[key] as? JSONDictionary,
+                   let coin = Coin(dictionary: coinValue) {
+                    coins.append(coin)
                 }
+
             }
             return coins
         })
@@ -42,11 +45,12 @@ public class CryptoCompareCoinService: CoinService {
             result += "\(currency.name),"
         }
         let url = "\(urls.coinPrice.rawValue)?fsym=\(currency.name)&tsyms=\(targetCurrenciesString)"
-        return self.caller.callJsonRESTAsync(url: url).map({ (jsonData: Dictionary<String, Any>?) in
+
+        return self.caller.callJsonRESTAsync(url: url).map({ (jsonData: JSONDictionary) in
             var result = Dictionary<String, Float>()
 
-            for symbol: String in jsonData!.keys {
-                result[symbol] = jsonData![symbol] as? Float
+            for symbol: String in jsonData.keys {
+                result[symbol] = jsonData[symbol] as? Float
             }
 
             return result

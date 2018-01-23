@@ -13,15 +13,15 @@ class RestCallerServiceTest: XCTestCase {
     func test_call_works() {
         let service = RestCallerService()
 
-        let actualObservable: Observable<Dictionary<String, Any>?> = service.callJsonRESTAsync(url: "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY")
+        let actualObservable: Observable<JSONDictionary> = service.callJsonRESTAsync(url: "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY")
 
         let ex = self.expectation(description: "Fetching suecceds")
         actualObservable.subscribe(
                 onNext: { jsonData in
                     XCTAssertNotNil(jsonData)
-                    let explanation = jsonData!["explanation"]
+                    let explanation = jsonData["explanation"]
                     XCTAssertNotNil(explanation)
-                    print(explanation!)
+                    print(explanation)
                     ex.fulfill()
                 },
                 onError: { error in

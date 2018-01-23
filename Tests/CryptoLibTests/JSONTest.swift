@@ -15,7 +15,7 @@ class JSONTest: XCTestCase {
             "Name": "BTC"
         ]
 
-        let actual: Coin? = decode(dictionary: dict)
+        let actual: Coin? = JSONUtils.decode(dictionary: dict)
         XCTAssertNotNil(actual)
         XCTAssertEqual(actual?.name, "BTC")
     }
@@ -32,8 +32,26 @@ class JSONTest: XCTestCase {
             ]
         ]
 
-        let actual: Array<Coin> = decode(dictionaries: dicts)
+        let actual: Array<Coin> = JSONUtils.decode(dictionaries: dicts)
         XCTAssertNotNil(actual)
         XCTAssertEqual(actual[0].name, "BTC")
+    }
+
+    func test_decode_data_json_array() {
+        let data: Data = "[{ \"Name\": \"BTC\", \"Id\": \"123\"}]".data(using: String.Encoding.utf8)!
+
+        let actual: Array<Coin>? = JSONUtils.decode(data: data)
+
+        XCTAssertNotNil(actual)
+        XCTAssertEqual(actual![0].name, "BTC")
+    }
+
+    func test_decode_data_json_object() {
+        let data: Data = "{ \"Name\": \"BTC\", \"Id\": \"123\"}".data(using: String.Encoding.utf8)!
+
+        let actual: Array<Coin>? = JSONUtils.decode(data: data)
+
+        XCTAssertNotNil(actual)
+        XCTAssertEqual(actual![0].name, "BTC")
     }
 }
