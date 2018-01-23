@@ -32,7 +32,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
 
     func test__mocked__list_returns_empty_array_if_no_Data_entry_in_json() throws {
 
-        let callerMock = RestCallerMock(returnedJson: """
+        let callerMock = RestCallerMock(jsonResponseStub: """
         {"test": "aaa"}
         """)
         let service = CryptoCompareCoinService(caller: callerMock)
@@ -46,7 +46,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
 
     func test__mocked__list_returns_array_containing_only_valid_Coin_entries_in_Data_entry_in_json() {
 
-        let callerMock = RestCallerMock(returnedJson: """
+        let callerMock = RestCallerMock(jsonResponseStub: """
         {"Data": {
             "invalid1": {},
             "invalid2": {"miscKey": "miscValue"},
@@ -84,8 +84,8 @@ class CryptoCompareCoinServiceTest: XCTestCase {
     fileprivate class RestCallerMock: RestCallerService {
         private let subject: BehaviorSubject<JSONDictionary>
 
-        init(returnedJson jsonString: String) {
-            let jsonDictionary = try? JSONSerialization.jsonObject(with: jsonString.data(using: String.Encoding.utf8)!) as? JSONDictionary
+        init(jsonResponseStub jsonString: String) {
+            let jsonDictionary: JSONDictionary?? = try? JSONSerialization.jsonObject(with: jsonString.data(using: String.Encoding.utf8)!) as? JSONDictionary
             self.subject = BehaviorSubject(value: jsonDictionary!!)
         }
         
