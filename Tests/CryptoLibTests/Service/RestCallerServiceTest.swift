@@ -21,7 +21,7 @@ class RestCallerServiceTest: XCTestCase {
                     XCTAssertNotNil(jsonData)
                     let explanation = jsonData["explanation"]
                     XCTAssertNotNil(explanation)
-                    print(explanation)
+                    print(explanation!)
                     ex.fulfill()
                 },
                 onError: { error in

@@ -4,7 +4,12 @@
 
 import RxSwift
 
+
+public typealias CurrencyPrices = Dictionary<String, Float>
+
 public protocol CoinService {
+
     func list() -> Observable<Array<Coin>>
-    func price(currency: Currency, targets: Array<Currency>) -> Observable<Dictionary<String, Float>>
+    func price(currency: Currency, targets: Array<Currency>) -> Observable<CurrencyPrices>
+    func multiprice(sources: Array<Currency>, targets: Array<Currency>) -> Observable<Dictionary<String, CurrencyPrices>>
 }

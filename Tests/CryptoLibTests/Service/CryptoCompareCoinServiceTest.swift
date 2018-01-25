@@ -81,6 +81,25 @@ class CryptoCompareCoinServiceTest: XCTestCase {
         self.wait(for: [ex], timeout: 2.0)
     }
 
+    func test_coin_multiprice() {
+        let ex = self.expectation(description: "Fetching succeeds")
+
+        let actualObservable = service.multiprice(sources: [Coin(id: "BTC", name: "BTC"), RealCurrency(name: "EUR")], targets: [RealCurrency(name: "USD"), RealCurrency(name: "EUR")])
+        actualObservable.subscribe(onNext: { priceData in
+            print(priceData)
+            XCTAssertNotNil(priceData["EUR"])
+            XCTAssertNotNil(priceData["EUR"]!["USD"])
+            XCTAssertNotNil(priceData["EUR"]!["EUR"])
+            XCTAssertEqual(priceData["EUR"]!["EUR"]!, 1.0)
+            XCTAssertNotNil(priceData["BTC"]!["EUR"])
+            XCTAssertNotNil(priceData["BTC"]!["USD"])
+            ex.fulfill()
+        })
+
+
+        self.wait(for: [ex], timeout: 2.0)
+    }
+
     fileprivate class RestCallerMock: RestCallerService {
         private let subject: BehaviorSubject<JSONDictionary>
 
