@@ -91,6 +91,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
             XCTAssertNotNil(priceData["EUR"]!["USD"])
             XCTAssertNotNil(priceData["EUR"]!["EUR"])
             XCTAssertEqual(priceData["EUR"]!["EUR"]!, 1.0)
+            XCTAssertNotNil(priceData["BTC"])
             XCTAssertNotNil(priceData["BTC"]!["EUR"])
             XCTAssertNotNil(priceData["BTC"]!["USD"])
             ex.fulfill()
