@@ -38,7 +38,9 @@ class JSONTest: XCTestCase {
     }
 
     func test_decode_data_json_array() {
-        let data: Data = "[{ \"Name\": \"BTC\", \"Id\": \"123\"}]".data(using: String.Encoding.utf8)!
+        let data: Data = """
+        [{ "Name": "BTC", "Id": "123"}]
+        """.data(using: String.Encoding.utf8)!
 
         let actual: Array<Coin>? = JSONUtils.decode(data: data)
 
@@ -47,7 +49,9 @@ class JSONTest: XCTestCase {
     }
 
     func test_decode_data_json_object() {
-        let data: Data = "{ \"Name\": \"BTC\", \"Id\": \"123\"}".data(using: String.Encoding.utf8)!
+        let data: Data = """
+            { "Name": "BTC", "Id": "123"}
+        """.data(using: String.Encoding.utf8)!
 
         let actual: Array<Coin>? = JSONUtils.decode(data: data)
 
