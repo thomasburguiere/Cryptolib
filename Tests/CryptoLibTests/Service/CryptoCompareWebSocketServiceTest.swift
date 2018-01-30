@@ -14,13 +14,15 @@ class CryptoCompareWebSocketServiceTest: XCTestCase {
 
         let service = CryptoCompareWebSocketService()
         var isFulfilled = false
-        var counter = 0
+        var receivedMessageCounter = 0
         _ = service.waitForConnect().subscribe(onNext: { noop in
-            _ = service.register(subscription: ["5~CCCAGG~BTC~USD", "5~CCCAGG~ETH~USD"]).subscribe(
-                    onNext: { (result: [String] ) in
-                        print("\(counter + 1): \(result)\n")
-                        counter += 1
-                        if (!result.isEmpty && counter > 9) {
+            service.addSubscriptions(subscriptions: ["5~CCCAGG~BTC~USD", "5~CCCAGG~ETH~USD"])
+            service.addSubscriptions(subscriptions: ["5~CCCAGG~XRP~EUR"])
+            _ = service.messageUpdateObservable!.subscribe(
+                    onNext: { (result: String ) in
+                        print("\(receivedMessageCounter + 1): \(result)\n")
+                        receivedMessageCounter += 1
+                        if (!result.isEmpty && receivedMessageCounter > 9) {
                             self.fulfillOnce(ex: ex, &isFulfilled)
                         }
                     },
