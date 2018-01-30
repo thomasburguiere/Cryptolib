@@ -16,31 +16,29 @@ public class CryptoCompareWebSocketService {
         self.manager = SocketManager(socketURL: URL(string: "https://streamer.cryptocompare.com")!, config: [.log(false), .compress])
         self.socket = manager.defaultSocket
 
-        self.socket.connect()
     }
 
-    public func onConnected() -> Observable<Any?> {
-        let subject: BehaviorSubject<Any?> = BehaviorSubject(value: nil)
+    public func waitForConnect() -> Observable<Any?> {
+        self.socket.connect()
+        return Observable.create { (observer: AnyObserver<Any?>) in
 
-        if(self.socket.status == .connected){
-            subject.on(.completed)
-            return subject
+            self.socket.on(clientEvent: .connect, callback: { data, ack in
+                observer.onNext(nil)
+            })
+
+            return Disposables.create(with: {})
         }
-
-        self.socket.on(clientEvent: .connect, callback: {(data: [Any], ack: SocketAckEmitter) in
-            subject.on(.completed)
-        })
-        return subject
     }
 
     public func register(subscription: Array<String>) -> Observable<[String]> {
-        self.socket.emit("SubAdd", ["subs", subscription])
+        self.socket.emit("SubAdd", ["subs": subscription])
 
-        return Observable.create({(observer: AnyObserver<Array<String>>) in
+        return Observable.create({ (observer: AnyObserver<Array<String>>) in
 
             self.socket.on("m", callback: { (data: [Any], ack) in
-                if(!data.isEmpty && (data[0] as! String).hasPrefix("4")) {
-                    observer.onError(NSError(domain: "", code: 401))
+                let response = data[0] as! String
+                if (!data.isEmpty && response.hasPrefix("401~")) {
+                    observer.onError(NSError(domain: "", code: 401, userInfo: ["response": response]))
                 }
                 observer.onNext(data as! Array<String>)
             })

@@ -31,6 +31,6 @@ class RestCallerServiceTest: XCTestCase {
                 onDisposed: nil
         )
 
-        self.wait(for: [ex], timeout: 5.0)
+        self.wait(for: [ex], timeout: 10.0)
     }
 }

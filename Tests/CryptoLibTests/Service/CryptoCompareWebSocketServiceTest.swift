@@ -14,14 +14,17 @@ class CryptoCompareWebSocketServiceTest: XCTestCase {
 
         let service = CryptoCompareWebSocketService()
         var isFulfilled = false
-        _ = service.waitForConnect().subscribe (onNext: { noop in
+        var counter = 0
+        _ = service.waitForConnect().subscribe(onNext: { noop in
             _ = service.register(subscription: ["5~CCCAGG~BTC~USD", "5~CCCAGG~ETH~USD"]).subscribe(
                     onNext: { (result: [String] ) in
-                        print(result)
-                        if (!result.isEmpty ) {
+                        print("\(counter + 1): \(result)\n")
+                        counter += 1
+                        if (!result.isEmpty && counter > 9) {
                             self.fulfillOnce(ex: ex, &isFulfilled)
                         }
-                    }, onError: { error in
+                    },
+                    onError: { error in
                         XCTFail("\(error)")
                         self.fulfillOnce(ex: ex, &isFulfilled)
                     }
@@ -34,7 +37,7 @@ class CryptoCompareWebSocketServiceTest: XCTestCase {
     }
 
     private func fulfillOnce(ex: XCTestExpectation, _ isFulfilled: inout Bool) {
-        if(!isFulfilled) {
+        if (!isFulfilled) {
             isFulfilled = true
             ex.fulfill()
         }

@@ -27,7 +27,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
             ex.fulfill()
         })
 
-        self.wait(for: [ex], timeout: 2.0)
+        self.wait(for: [ex], timeout: 10.0)
     }
 
     func test__mocked__list_returns_empty_array_if_no_Data_entry_in_json() throws {
@@ -78,7 +78,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
         })
 
 
-        self.wait(for: [ex], timeout: 2.0)
+        self.wait(for: [ex], timeout: 10.0)
     }
 
     func test_coin_multiprice() {
@@ -98,7 +98,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
         })
 
 
-        self.wait(for: [ex], timeout: 2.0)
+        self.wait(for: [ex], timeout: 10.0)
     }
 
     fileprivate class RestCallerMock: RestCallerService {
