@@ -17,7 +17,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
         let ex = self.expectation(description: "Fetching succeeds")
         let actualObs = service.list()
 
-        actualObs.subscribe(onNext: { coinList in
+        _ = actualObs.subscribe(onNext: { coinList in
             XCTAssertTrue(!coinList.isEmpty)
 
             let bitcoin: Coin? = coinList.first(where: { (coin: Coin) -> Bool in
@@ -37,7 +37,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
         """)
         let service = CryptoCompareCoinService(caller: callerMock)
 
-        service.list().subscribe(onNext: { coinList in
+        _ = service.list().subscribe(onNext: { coinList in
             XCTAssertTrue(coinList.isEmpty)
         })
 
@@ -58,7 +58,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
         )
         let service = CryptoCompareCoinService(caller: callerMock)
 
-        service.list().subscribe(onNext: { coinList in
+        _ = service.list().subscribe(onNext: { coinList in
             XCTAssertFalse(coinList.isEmpty)
             XCTAssertEqual(coinList.count, 1)
             XCTAssertEqual(coinList.first!.name, "valid")
@@ -71,7 +71,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
         let ex = self.expectation(description: "Fetching succeeds")
 
         let actualObservable = service.price(currency: Coin(id: "BTC", name: "BTC"), targets: [RealCurrency(name: "EUR")])
-        actualObservable.subscribe(onNext: { priceData in
+        _ = actualObservable.subscribe(onNext: { priceData in
             print(priceData)
             XCTAssertNotNil(priceData["EUR"])
             ex.fulfill()
@@ -85,7 +85,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
         let ex = self.expectation(description: "Fetching succeeds")
 
         let actualObservable = service.multiprice(sources: [Coin(id: "BTC", name: "BTC"), RealCurrency(name: "EUR")], targets: [RealCurrency(name: "USD"), RealCurrency(name: "EUR")])
-        actualObservable.subscribe(onNext: { priceData in
+        _ = actualObservable.subscribe(onNext: { priceData in
             print(priceData)
             XCTAssertNotNil(priceData["EUR"])
             XCTAssertNotNil(priceData["EUR"]!["USD"])
@@ -107,7 +107,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
             let jsonDictionary: JSONDictionary?? = try? JSONSerialization.jsonObject(with: jsonString.data(using: String.Encoding.utf8)!) as? JSONDictionary
             self.subject = BehaviorSubject(value: jsonDictionary!!)
         }
-        
+
         func resolve() {
             self.subject.on(.completed)
         }

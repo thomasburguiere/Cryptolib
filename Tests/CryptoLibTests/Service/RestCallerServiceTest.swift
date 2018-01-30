@@ -15,8 +15,8 @@ class RestCallerServiceTest: XCTestCase {
 
         let actualObservable: Observable<JSONDictionary> = service.callJsonRESTAsync(url: "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY")
 
-        let ex = self.expectation(description: "Fetching suecceds")
-        actualObservable.subscribe(
+        let ex = self.expectation(description: "Fetching succeeds")
+        _ = actualObservable.subscribe(
                 onNext: { jsonData in
                     XCTAssertNotNil(jsonData)
                     let explanation = jsonData["explanation"]
@@ -31,6 +31,6 @@ class RestCallerServiceTest: XCTestCase {
                 onDisposed: nil
         )
 
-        self.wait(for: [ex], timeout: 2.0)
+        self.wait(for: [ex], timeout: 5.0)
     }
 }
