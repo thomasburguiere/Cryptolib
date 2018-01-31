@@ -12,6 +12,7 @@ public class CryptoCompareWebSocketService {
     private let manager: SocketManager;
     private let socket: SocketIOClient;
     var messageUpdateObservable: Observable<String>?
+    private let disposeBag = DisposeBag()
 
     init() {
         self.manager = SocketManager(socketURL: URL(string: "https://streamer.cryptocompare.com")!, config: [.log(false), .compress])
@@ -55,6 +56,7 @@ public class CryptoCompareWebSocketService {
             }
             subject.onNext(response)
         })
+        subject.disposed(by: disposeBag)
         return subject
     }
 }
