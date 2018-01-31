@@ -9,12 +9,13 @@ import RxSwift
 
 public class CryptoCompareWebSocketService {
 
+    public private(set) var messageUpdateObservable: Observable<String>?
+
     private let manager: SocketManager;
     private let socket: SocketIOClient;
-    var messageUpdateObservable: Observable<String>?
     private let disposeBag = DisposeBag()
 
-    init() {
+    public init() {
         self.manager = SocketManager(socketURL: URL(string: "https://streamer.cryptocompare.com")!, config: [.log(false), .compress])
         self.socket = manager.defaultSocket
 
