@@ -25,24 +25,7 @@ public class CryptoCompareWebSocketService {
 
             self.socket.on(clientEvent: .connect, callback: { data, ack in
 
-                self.messageUpdateObservable = Observable.create({ (observer: AnyObserver<String>) in
-
-                    self.socket.on("m", callback: { (data: [Any], ack) in
-                        guard let response = data[0] as? String else {
-                            observer.onError(NSError(domain: "", code: 401, userInfo: ["cause": "no response"]))
-                            return
-                        }
-                        if response.hasPrefix("401~") {
-                            observer.onError(NSError(domain: "", code: 401, userInfo: ["response": response]))
-                        }
-                        observer.onNext(response)
-                    })
-
-                    return Disposables.create(with: {
-                        self.socket.disconnect()
-                    })
-                })
-
+                self.messageUpdateObservable = self.setupMessageObservable()
                 observer.onNext(nil)
             })
 
@@ -52,5 +35,29 @@ public class CryptoCompareWebSocketService {
 
     public func addSubscriptions(subscriptions: Array<String>) {
         self.socket.emit("SubAdd", ["subs": subscriptions])
+    }
+
+    public func removeSubscriptions(subscriptions: Array<String>) {
+        self.socket.emit("SubRemove", ["subs": subscriptions])
+    }
+
+    private func setupMessageObservable() -> Observable<String> {
+        return Observable.create({ (observer: AnyObserver<String>) in
+
+            self.socket.on("m", callback: { (data: [Any], ack) in
+                guard let response = data[0] as? String else {
+                    observer.onError(NSError(domain: "", code: 401, userInfo: ["cause": "no response"]))
+                    return
+                }
+                if response.hasPrefix("401~") {
+                    observer.onError(NSError(domain: "", code: 401, userInfo: ["response": response]))
+                }
+                observer.onNext(response)
+            })
+
+            return Disposables.create(with: {
+                self.socket.disconnect()
+            })
+        })
     }
 }

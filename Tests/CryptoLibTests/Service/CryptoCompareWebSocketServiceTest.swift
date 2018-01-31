@@ -17,7 +17,6 @@ class CryptoCompareWebSocketServiceTest: XCTestCase {
         var receivedMessageCounter = 0
         _ = service.waitForConnect().subscribe(onNext: { noop in
             service.addSubscriptions(subscriptions: ["5~CCCAGG~BTC~USD", "5~CCCAGG~ETH~USD"])
-            service.addSubscriptions(subscriptions: ["5~CCCAGG~XRP~EUR"])
             _ = service.messageUpdateObservable!.subscribe(
                     onNext: { (result: String ) in
                         print("\(receivedMessageCounter + 1): \(result)\n")
