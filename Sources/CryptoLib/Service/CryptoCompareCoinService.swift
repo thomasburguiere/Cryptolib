@@ -10,6 +10,7 @@ fileprivate enum urls: String {
     case listCoin = "https://min-api.cryptocompare.com/data/all/coinlist"
     case coinPrice = "https://min-api.cryptocompare.com/data/price"
     case coinMultiprice = "https://min-api.cryptocompare.com/data/pricemulti"
+    case histogramPerMinute = "https://min-api.cryptocompare.com/data/histominute"
 }
 
 public class CryptoCompareCoinService: CoinService {
@@ -77,4 +78,24 @@ public class CryptoCompareCoinService: CoinService {
         })
     }
 
+    public func histogramPerMinute(from: Currency, to: Currency, limit: Int? = 60, toTimestamp toTimestampOpt: Int? = nil)
+                    -> Observable<Array<PriceDataPoint>> {
+        var url = "\(urls.histogramPerMinute.rawValue)?fsym=\(from.name)&tsym=\(to.name)&limit=\(limit!)"
+        if let _toTimestamp = toTimestampOpt {
+            url += "&toTs=\(_toTimestamp)"
+        }
+
+        return self.caller.callJsonRESTAsync(url: url).map({ (jsonData: JSONDictionary) -> Array<PriceDataPoint> in
+            guard let histoData = jsonData["Data"] as? Array<JSONDictionary> else {
+                return []
+            }
+
+            return histoData.flatMap({ (data: JSONDictionary) -> PriceDataPoint? in
+                guard let datapoint = PriceDataPoint(dictionary: data) else {
+                    return nil
+                }
+                return datapoint
+            })
+        })
+    }
 }
