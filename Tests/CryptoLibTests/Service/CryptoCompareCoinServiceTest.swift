@@ -70,7 +70,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
         let actualObs = service.histogramPerMinute(from: Coin(id:"XRP", name:"XRP"), to: RealCurrency(name: "USD"))
 
         _ = actualObs.subscribe(onNext: {(histogramData: Array<PriceDataPoint>) in
-            print(histogramData.count)
+            XCTAssertEqual(histogramData.count, 60)
             ex.fulfill()
         })
 
