@@ -80,6 +80,7 @@ public class CryptoCompareCoinService: CoinService {
 
     public func histogramPerMinute(from: Currency, to: Currency, limit: Int? = 60, toTimestamp toTimestampOpt: Int? = nil)
                     -> Observable<Array<PriceDataPoint>> {
+
         var url = "\(urls.histogramPerMinute.rawValue)?fsym=\(from.name)&tsym=\(to.name)&limit=\(limit!)"
         if let _toTimestamp = toTimestampOpt {
             url += "&toTs=\(_toTimestamp)"

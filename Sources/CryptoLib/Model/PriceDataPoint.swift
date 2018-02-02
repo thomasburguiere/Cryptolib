@@ -4,12 +4,18 @@
 
 import Foundation
 
-public class PriceDataPoint: JSONDecodable {
+public class PriceDataPoint: JSONDecodable, CustomStringConvertible {
     let timestamp: Int
     let close: Float
     let high: Float
     let low: Float
     let open: Float
+
+    public var description: String {
+        return """
+        {timestamp: \(timestamp), close: \(close), high: \(high), low: \(low), open: \(open)}
+        """
+    }
 
     required public init?(dictionary: JSONDictionary) {
         guard let timestamp = dictionary["time"] as? Int,
