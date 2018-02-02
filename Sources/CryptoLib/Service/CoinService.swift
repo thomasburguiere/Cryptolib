@@ -12,5 +12,5 @@ public protocol CoinService {
     func list() -> Observable<Array<Coin>>
     func price(currency: Currency, targets: Array<Currency>) -> Observable<CurrencyPrices>
     func multiprice(sources: Array<Currency>, targets: Array<Currency>) -> Observable<Dictionary<String, CurrencyPrices>>
-    func histogramPerMinute(from: Currency, to: Currency, limit: Int?, toTimestamp: Int?) -> Observable<Array<PriceDataPoint>>
+    func histogramPerMinute(from: Currency, to: Currency, numberOfPoints: Int?, toTimestamp: Int?) -> Observable<Array<PriceDataPoint>>
 }

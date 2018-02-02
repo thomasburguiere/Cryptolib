@@ -69,8 +69,8 @@ class CryptoCompareCoinServiceTest: XCTestCase {
         let ex = self.expectation(description: "Fetching succeeds")
         let actualObs = service.histogramPerMinute(from: Coin(id:"XRP", name:"XRP"), to: RealCurrency(name: "USD"))
 
-        _ = actualObs.subscribe(onNext: {histogramData in
-            print(histogramData)
+        _ = actualObs.subscribe(onNext: {(histogramData: Array<PriceDataPoint>) in
+            print(histogramData.count)
             ex.fulfill()
         })
 

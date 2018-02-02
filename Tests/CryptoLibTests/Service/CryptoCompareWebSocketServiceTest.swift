@@ -8,7 +8,7 @@ import XCTest
 
 class CryptoCompareWebSocketServiceTest: XCTestCase {
 
-    func test() {
+    func test_websocket() {
 
         let ex = self.expectation(description: "Fetching succeeds")
 

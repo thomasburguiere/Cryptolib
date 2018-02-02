@@ -78,15 +78,16 @@ public class CryptoCompareCoinService: CoinService {
         })
     }
 
-    public func histogramPerMinute(from: Currency, to: Currency, limit: Int? = 60, toTimestamp toTimestampOpt: Int? = nil)
+    public func histogramPerMinute(from: Currency, to: Currency, numberOfPoints limit: Int? = 60, toTimestamp toTimestampOpt: Int? = nil)
                     -> Observable<Array<PriceDataPoint>> {
 
-        var url = "\(urls.histogramPerMinute.rawValue)?fsym=\(from.name)&tsym=\(to.name)&limit=\(limit!)"
+        let apiLimit: Int = limit! - 1
+        var url = "\(urls.histogramPerMinute.rawValue)?fsym=\(from.name)&tsym=\(to.name)&limit=\(apiLimit)"
         if let _toTimestamp = toTimestampOpt {
             url += "&toTs=\(_toTimestamp)"
         }
 
-        return self.caller.callJsonRESTAsync(url: url).map({ (jsonData: JSONDictionary) -> Array<PriceDataPoint> in
+        let responseMapper = { (jsonData: JSONDictionary) -> Array<PriceDataPoint> in
             guard let histoData = jsonData["Data"] as? Array<JSONDictionary> else {
                 return []
             }
@@ -97,6 +98,7 @@ public class CryptoCompareCoinService: CoinService {
                 }
                 return datapoint
             })
-        })
+        }
+        return self.caller.callJsonRESTAsync(url: url).map(responseMapper)
     }
 }
