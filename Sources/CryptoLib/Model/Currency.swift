@@ -4,6 +4,6 @@
 
 import Foundation
 
-public protocol Currency {
+public protocol Currency: CustomStringConvertible {
     var name: String { get }
 }

@@ -17,6 +17,8 @@ public class Coin: Currency, JSONDecodable {
         self.name = name
     }
 
+    public var description: String { return "\(self.name)" }
+
     required public init?(dictionary: JSONDictionary) {
         guard let name = dictionary["Name"] as? String,
               let id = dictionary["Id"] as? String
