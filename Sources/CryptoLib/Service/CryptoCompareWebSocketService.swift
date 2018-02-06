@@ -9,41 +9,15 @@ import RxSwift
 
 public class CryptoCompareWebSocketService: CoinWebSocketService {
 
-    private var internalMessageObservable: Observable<Dictionary<String, Any>>?
-    public var obs: Observable<SubscriptionResult>? {
-        get {
-            guard let o: Observable<Dictionary<String, Any>> = self.internalMessageObservable else {
-                return nil
-            }
-            let filterOutEmptyOptionals: (SubscriptionResult?) -> Bool = { entry in
-                if let _ = entry {
-                    return true
-                }
-                return false
-            }
-            let unwrapOptional: (SubscriptionResult?) -> SubscriptionResult = { entry in
-                return entry!
-            }
-            return o.map({ (entry: Dictionary<String, Any>) -> SubscriptionResult? in
-                guard let from = entry["FROMSYMBOL"] as? String,
-                      let to = entry["TOSYMBOL"] as? String,
-                      let price = entry["PRICE"] as? Float else {
-                    return nil
-                }
-                return SubscriptionResult(from: Coin(from), to: RealCurrency(to), price: price)
-            }).filter(filterOutEmptyOptionals).map(unwrapOptional)
-        }
-
-    }
+    public var obs: Observable<SubscriptionResult>?
 
     private let manager: SocketManager;
     private let socket: SocketIOClient;
     private let disposeBag = DisposeBag()
 
-    public init() {
+    init() {
         self.manager = SocketManager(socketURL: URL(string: "https://streamer.cryptocompare.com")!, config: [.log(false), .compress])
         self.socket = manager.defaultSocket
-
     }
 
     public func waitForConnect() -> Observable<Any?> {
@@ -52,7 +26,7 @@ public class CryptoCompareWebSocketService: CoinWebSocketService {
 
             self.socket.on(clientEvent: .connect, callback: { data, ack in
 
-                self.internalMessageObservable = self.setupMessageObservable()
+                self.obs = self.setupMessageObservable()
                 observer.onNext(nil)
             })
 
@@ -90,9 +64,9 @@ public class CryptoCompareWebSocketService: CoinWebSocketService {
         self.socket.emit("SubRemove", ["subs": subscriptions])
     }
 
-    private func setupMessageObservable() -> Observable<Dictionary<String, Any>> {
+    private func setupMessageObservable() -> Observable<SubscriptionResult> {
 
-        let subject = PublishSubject<Dictionary<String, Any>>()
+        let subject = PublishSubject<SubscriptionResult>()
 
         self.socket.on("m", callback: { (data: [Any], ack) in
             guard let response = data[0] as? String else {
@@ -108,7 +82,14 @@ public class CryptoCompareWebSocketService: CoinWebSocketService {
                 return
             }
 
-            subject.onNext(unpackedResponse)
+            guard let from = unpackedResponse["FROMSYMBOL"] as? String,
+                  let to = unpackedResponse["TOSYMBOL"] as? String,
+                  let price = unpackedResponse["PRICE"] as? Float else {
+                print("got response without fromSymbol/toSymbol/price: \(unpackedResponse)\n")
+                return
+            }
+
+            subject.onNext(SubscriptionResult(from: Coin(from), to: RealCurrency(to), price: price))
         })
         subject.disposed(by: disposeBag)
         return subject

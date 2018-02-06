@@ -12,7 +12,7 @@ class CryptoCompareWebSocketServiceTest: XCTestCase {
 
         let ex = self.expectation(description: "Fetching succeeds")
 
-        let service = CryptoCompareWebSocketService()
+        let service: CoinWebSocketService = CryptoCompareWebSocketService()
         var isFulfilled = false
         var receivedMessageCounter = 0
         _ = service.waitForConnect().subscribe(onNext: { noop in

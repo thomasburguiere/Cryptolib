@@ -48,4 +48,5 @@ public protocol CoinWebSocketService {
     func waitForConnect() -> Observable<Any?>
     func addSubscriptions(subscriptions: Array<Subscription>)
     func removeSubscriptions(subscriptions: Array<Subscription>)
+    var obs: Observable<SubscriptionResult>? { get }
 }
