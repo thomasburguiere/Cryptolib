@@ -17,13 +17,34 @@ class CryptoCompareUtilsTest: XCTestCase {
     private let response4 = "5~CCCAGG~BTC~USD~4~7297~1517844555~0.1288158~942.8028402000001~187372503~151337.52627822058~1185139983.8338788~232720.33136931487~1855947491.6099107~8217.6~8391.29~7221.14~8418.1~8600.04~7207.29~Bitfinex~7ffe9"
 
     func test_update_data_is_unpacked_correctly() {
-        let updateResponse = "5~CCCAGG~BTC~USD~4~1517441113~0.00088366~8.8585942974~2905510661~119684.06513938117~1204555739.1975193~118320.2693874718~1190868665.3976107~10112.27~10398.87~9683.61~Gemini~78fe8"
+        let actual1 = CryptoCompareUtils.unpackCurrent(tradeString: response1)
+        XCTAssertEqual(actual1["TOSYMBOL"] as! Substring, "USD")
+        XCTAssertEqual(actual1["FROMSYMBOL"] as! Substring, "BTC")
+        XCTAssertEqual(actual1["FLAGS"] as! Substring, "1")
+        XCTAssertEqual(actual1["MARKET"] as! Substring, "CCCAGG")
+        XCTAssertNil(actual1["LASTMARKET"])
 
-        let actual = CryptoCompareUtils.unpackCurrent(tradeString: updateResponse)
-        XCTAssertEqual(actual["TOSYMBOL"] as! Substring, "USD")
-        XCTAssertEqual(actual["FROMSYMBOL"] as! Substring, "BTC")
+        print(actual1)
 
-        print(actual)
+
+        let actual2 = CryptoCompareUtils.unpackCurrent(tradeString: response2)
+        XCTAssertEqual(actual2["TOSYMBOL"] as! Substring, "USD")
+        XCTAssertEqual(actual2["FROMSYMBOL"] as! Substring, "BTC")
+        XCTAssertEqual(actual2["FLAGS"] as! Substring, "2")
+        XCTAssertEqual(actual2["MARKET"] as! Substring, "CCCAGG")
+        XCTAssertNil(actual2["LASTMARKET"])
+
+        print(actual2)
+
+
+        let actual4 = CryptoCompareUtils.unpackCurrent(tradeString: response4)
+        XCTAssertEqual(actual4["TOSYMBOL"] as! Substring, "USD")
+        XCTAssertEqual(actual4["FROMSYMBOL"] as! Substring, "BTC")
+        XCTAssertEqual(actual4["FLAGS"] as! Substring, "4")
+        XCTAssertEqual(actual4["MARKET"] as! Substring, "CCCAGG")
+        XCTAssertNotNil(actual4["LASTMARKET"])
+
+        print(actual4)
 
     }
 
