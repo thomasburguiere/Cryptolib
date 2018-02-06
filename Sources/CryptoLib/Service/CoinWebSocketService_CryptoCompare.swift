@@ -7,7 +7,7 @@ import SocketIO
 import RxSwift
 
 
-public class CryptoCompareWebSocketService: CoinWebSocketService {
+public class CoinWebSocketService_CryptoCompare: CoinWebSocketService {
 
     public var obs: Observable<SubscriptionResult>?
 
@@ -35,12 +35,12 @@ public class CryptoCompareWebSocketService: CoinWebSocketService {
     }
 
     public func addSubscriptions(subscriptions: Array<Subscription>) {
-        let stringSubscriptions: Array<String> = CryptoCompareWebSocketService.subscriptionAsCryptoCompareString(subscriptions)
+        let stringSubscriptions: Array<String> = CoinWebSocketService_CryptoCompare.subscriptionAsCryptoCompareString(subscriptions)
         self.addSubscriptions(subscriptions: stringSubscriptions)
     }
 
     public func removeSubscriptions(subscriptions: Array<Subscription>) {
-        let stringSubscriptions: Array<String> = CryptoCompareWebSocketService.subscriptionAsCryptoCompareString(subscriptions)
+        let stringSubscriptions: Array<String> = CoinWebSocketService_CryptoCompare.subscriptionAsCryptoCompareString(subscriptions)
         self.socket.emit("SubRemove", ["subs": stringSubscriptions])
     }
 

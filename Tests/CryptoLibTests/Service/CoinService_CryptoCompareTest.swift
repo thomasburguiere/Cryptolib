@@ -8,9 +8,9 @@ import RxSwift
 @testable import CryptoLib
 
 
-class CryptoCompareCoinServiceTest: XCTestCase {
+class CoinService_CryptoCompareTest: XCTestCase {
 
-    private let service = CryptoCompareCoinService(caller: RestCallerService())
+    private let service = CoinRestService_CryptoCompare(caller: RestCallerService())
 
     func test_list_coins_works() {
 

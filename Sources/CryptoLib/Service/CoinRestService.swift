@@ -7,7 +7,7 @@ import RxSwift
 
 public typealias CurrencyPrices = Dictionary<String, Float>
 
-public protocol CoinService {
+public protocol CoinRestService {
 
     func list() -> Observable<Array<Coin>>
     func price(currency: Currency, targets: Array<Currency>) -> Observable<CurrencyPrices>

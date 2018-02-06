@@ -8,14 +8,14 @@ import RxSwift
 @testable import CryptoLib
 
 
-class CryptoCompareCoinServiceMockedTest: XCTestCase {
+class CoinService_CryptoCompareMockedTest: XCTestCase {
 
     func test__mocked__list_returns_empty_array_if_no_Data_entry_in_json() throws {
 
         let callerMock = RestCallerMock(jsonResponseStub: """
         {"test": "aaa"}
         """)
-        let service = CryptoCompareCoinService(caller: callerMock)
+        let service = CoinRestService_CryptoCompare(caller: callerMock)
 
         _ = service.list().subscribe(onNext: { coinList in
             XCTAssertTrue(coinList.isEmpty)
@@ -36,7 +36,7 @@ class CryptoCompareCoinServiceMockedTest: XCTestCase {
         }
         """
         )
-        let service = CryptoCompareCoinService(caller: callerMock)
+        let service = CoinRestService_CryptoCompare(caller: callerMock)
 
         _ = service.list().subscribe(onNext: { coinList in
             XCTAssertFalse(coinList.isEmpty)

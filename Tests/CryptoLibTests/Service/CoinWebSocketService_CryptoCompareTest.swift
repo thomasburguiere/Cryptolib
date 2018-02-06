@@ -6,13 +6,13 @@ import XCTest
 
 @testable import CryptoLib
 
-class CryptoCompareWebSocketServiceTest: XCTestCase {
+class CoinWebSocketService_CryptoCompareTest: XCTestCase {
 
     func test_websocket() {
 
         let ex = self.expectation(description: "Fetching succeeds")
 
-        let service: CoinWebSocketService = CryptoCompareWebSocketService()
+        let service: CoinWebSocketService = CoinWebSocketService_CryptoCompare()
         var isFulfilled = false
         var receivedMessageCounter = 0
         _ = service.waitForConnect().subscribe(onNext: { noop in
