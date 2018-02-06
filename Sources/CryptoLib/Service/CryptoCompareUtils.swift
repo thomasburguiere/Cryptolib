@@ -27,7 +27,7 @@ struct Field {
     }
 }
 
-let CURRENT_FIELDS = [
+let CURRENT_FIELDS: [Field] = [
     Field("TYPE", 0x0), // hex for binary 0, it is a special case of fields that are always there
     Field("MARKET", 0x0), // hex for binary 0, it is a special case of fields that are always there
     Field("FROMSYMBOL", 0x0), // hex for binary 0, it is a special case of fields that are always there
@@ -60,7 +60,7 @@ struct CryptoCompareUtils {
     static func unpackCurrent(tradeString: String) -> Dictionary<String, Any> {
         var valuesArray: Array<Substring> = tradeString.split(separator: "~");
         let mask = valuesArray.last!;
-        let maskInt = Int(mask, radix: 16);
+        let maskInt: Int? = Int(mask, radix: 16);
         var unpackedCurrent = Dictionary<String, Any>();
         var currentFieldIndex = 0;
 
@@ -70,7 +70,7 @@ struct CryptoCompareUtils {
             if field.value == 0 {
                 unpackedCurrent[field.name] = valuesArray[currentFieldIndex];
                 currentFieldIndex += 1;
-            } else if (maskInt != nil && maskInt! & field.value != 0) {
+            } else if maskInt != nil && (maskInt! & field.value != 0) {
                 //i know this is a hack, for cccagg, future code please don't hate me:(, i did this to avoid
                 //subscribing to trades as well in order to show the last market
                 if field.name == "LASTMARKET" {
