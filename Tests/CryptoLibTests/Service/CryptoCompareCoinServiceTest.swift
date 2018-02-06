@@ -33,7 +33,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
     func test_coin_price() {
         let ex = self.expectation(description: "Fetching succeeds")
 
-        let actualObs = service.price(currency: Coin(id: "BTC", name: "BTC"), targets: [RealCurrency(name: "EUR")])
+        let actualObs = service.price(currency: Coin(id: "BTC", name: "BTC"), targets: [RealCurrency("EUR")])
         _ = actualObs.subscribe(onNext: { priceData in
             print(priceData)
             XCTAssertNotNil(priceData["EUR"])
@@ -47,7 +47,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
     func test_coin_multiprice() {
         let ex = self.expectation(description: "Fetching succeeds")
 
-        let actualObs = service.multiprice(sources: [Coin(id: "BTC", name: "BTC"), RealCurrency(name: "EUR")], targets: [RealCurrency(name: "USD"), RealCurrency(name: "EUR")])
+        let actualObs = service.multiprice(sources: [Coin(id: "BTC", name: "BTC"), RealCurrency("EUR")], targets: [RealCurrency("USD"), RealCurrency("EUR")])
         _ = actualObs.subscribe(onNext: { priceData in
             print(priceData)
             XCTAssertNotNil(priceData["EUR"])
@@ -67,7 +67,7 @@ class CryptoCompareCoinServiceTest: XCTestCase {
     func test_coin_histogram_minute() {
 
         let ex = self.expectation(description: "Fetching succeeds")
-        let actualObs = service.histogramPerMinute(from: Coin(id:"XRP", name:"XRP"), to: RealCurrency(name: "USD"))
+        let actualObs = service.histogramPerMinute(from: Coin(id:"XRP", name:"XRP"), to: RealCurrency("USD"))
 
         _ = actualObs.subscribe(onNext: {(histogramData: Array<PriceDataPoint>) in
             XCTAssertEqual(histogramData.count, 60)

@@ -5,7 +5,6 @@
 import Foundation
 
 
-
 struct Field {
     let name: String
     let value: Int
@@ -59,6 +58,16 @@ let CURRENT_FIELDS: [Field] = [
 
 struct CryptoCompareUtils {
 
+    static func unpack(_ message: String) -> Dictionary<String, Any>? {
+        if message.hasPrefix("5~") || message.hasPrefix("2~") {
+            return unpackCurrent(message)
+        }
+        if message.hasPrefix("3~") {
+            return ["info" :message]
+        }
+        return nil
+    }
+
     static func unpackCurrent(_ message: String) -> Dictionary<String, Any> {
         var valuesArray: Array<Substring> = message.split(separator: "~");
         let mask = valuesArray.last!;
@@ -69,15 +78,15 @@ struct CryptoCompareUtils {
         for field in CURRENT_FIELDS {
 
             if field.value == 0 {
-                unpackedCurrent[field.name] = valuesArray[currentFieldIndex];
+                unpackedCurrent[field.name] = valuesArray[currentFieldIndex].description;
                 currentFieldIndex += 1;
             } else if maskInt != nil && (maskInt! & field.value != 0) {
                 //i know this is a hack, for cccagg, future code please don't hate me:(, i did this to avoid
                 //subscribing to trades as well in order to show the last market
                 if field.name == "LASTMARKET" {
-                    unpackedCurrent[field.name] = valuesArray[currentFieldIndex];
+                    unpackedCurrent[field.name] = valuesArray[currentFieldIndex].description;
                 } else {
-                    unpackedCurrent[field.name] = Float(valuesArray[currentFieldIndex]);
+                    unpackedCurrent[field.name] = Float(valuesArray[currentFieldIndex].description);
                 }
                 currentFieldIndex += 1;
             }
