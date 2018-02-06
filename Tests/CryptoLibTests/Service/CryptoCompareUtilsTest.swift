@@ -17,7 +17,7 @@ class CryptoCompareUtilsTest: XCTestCase {
     private let response4 = "5~CCCAGG~BTC~USD~4~7297~1517844555~0.1288158~942.8028402000001~187372503~151337.52627822058~1185139983.8338788~232720.33136931487~1855947491.6099107~8217.6~8391.29~7221.14~8418.1~8600.04~7207.29~Bitfinex~7ffe9"
 
     func test_update_data_is_unpacked_correctly() {
-        let actual1 = CryptoCompareUtils.unpackCurrent(tradeString: response1)
+        let actual1 = CryptoCompareUtils.unpackCurrent(response1)
         XCTAssertEqual(actual1["TOSYMBOL"] as! Substring, "USD")
         XCTAssertEqual(actual1["FROMSYMBOL"] as! Substring, "BTC")
         XCTAssertEqual(actual1["FLAGS"] as! Substring, "1")
@@ -37,7 +37,7 @@ class CryptoCompareUtilsTest: XCTestCase {
         XCTAssertEqual(actual1["VOLUME24HOURTO"] as! Float, 1855970075.36261)
 
 
-        let actual2 = CryptoCompareUtils.unpackCurrent(tradeString: response2)
+        let actual2 = CryptoCompareUtils.unpackCurrent(response2)
         XCTAssertEqual(actual2["TOSYMBOL"] as! Substring, "USD")
         XCTAssertEqual(actual2["FROMSYMBOL"] as! Substring, "BTC")
         XCTAssertEqual(actual2["FLAGS"] as! Substring, "2")
@@ -60,7 +60,7 @@ class CryptoCompareUtilsTest: XCTestCase {
         print(actual2)
 
 
-        let actual4 = CryptoCompareUtils.unpackCurrent(tradeString: response4)
+        let actual4 = CryptoCompareUtils.unpackCurrent(response4)
         XCTAssertEqual(actual4["TOSYMBOL"] as! Substring, "USD")
         XCTAssertEqual(actual4["FROMSYMBOL"] as! Substring, "BTC")
         XCTAssertEqual(actual4["FLAGS"] as! Substring, "4")

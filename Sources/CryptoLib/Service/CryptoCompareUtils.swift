@@ -57,8 +57,8 @@ let CURRENT_FIELDS: [Field] = [
 
 struct CryptoCompareUtils {
 
-    static func unpackCurrent(tradeString: String) -> Dictionary<String, Any> {
-        var valuesArray: Array<Substring> = tradeString.split(separator: "~");
+    static func unpackCurrent(_ message: String) -> Dictionary<String, Any> {
+        var valuesArray: Array<Substring> = message.split(separator: "~");
         let mask = valuesArray.last!;
         let maskInt: Int? = Int(mask, radix: 16);
         var unpackedCurrent = Dictionary<String, Any>();
