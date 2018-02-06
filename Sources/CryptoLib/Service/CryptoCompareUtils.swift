@@ -4,18 +4,7 @@
 
 import Foundation
 
-let TRADE_FIELDS = [
-    "T": 0x0, // hex for binary 0, it is a special case of fields that are always there TYPE
-    "M": 0x0, // hex for binary 0, it is a special case of fields that are always there MARKET
-    "FSYM": 0x0, // hex for binary 0, it is a special case of fields that are always there FROM SYMBOL
-    "TSYM": 0x0, // hex for binary 0, it is a special case of fields that are always there TO SYMBOL
-    "F": 0x0, // hex for binary 0, it is a special case of fields that are always there FLAGS
-    "ID": 0x1, // hex for binary 1                                                       ID
-    "TS": 0x2, // hex for binary 10                                                      TIMESTAMP
-    "Q": 0x4, // hex for binary 100                                                     QUANTITY
-    "P": 0x8, // hex for binary 1000                                                    PRICE
-    "TOTAL": 0x10, // hex for binary 10000                                                   TOTAL
-];
+
 
 struct Field {
     let name: String
@@ -26,6 +15,19 @@ struct Field {
         self.value = value
     }
 }
+
+let TRADE_FIELDS: [Field] = [
+    Field("T", 0x0), // hex for binary 0, it is a special case of fields that are always there TYPE
+    Field("M", 0x0), // hex for binary 0, it is a special case of fields that are always there MARKET
+    Field("FSYM", 0x0), // hex for binary 0, it is a special case of fields that are always there FROM SYMBOL
+    Field("TSYM", 0x0), // hex for binary 0, it is a special case of fields that are always there TO SYMBOL
+    Field("F", 0x0), // hex for binary 0, it is a special case of fields that are always there FLAGS
+    Field("ID", 0x1), // hex for binary 1                                                       ID
+    Field("TS", 0x2), // hex for binary 10                                                      TIMESTAMP
+    Field("Q", 0x4), // hex for binary 100                                                     QUANTITY
+    Field("P", 0x8), // hex for binary 1000                                                    PRICE
+    Field("TOTAL", 0x10), // hex for binary 10000                                                   TOTAL
+];
 
 let CURRENT_FIELDS: [Field] = [
     Field("TYPE", 0x0), // hex for binary 0, it is a special case of fields that are always there
@@ -64,7 +66,6 @@ struct CryptoCompareUtils {
         var unpackedCurrent = Dictionary<String, Any>();
         var currentFieldIndex = 0;
 
-        // TODO : manage to have CURRENT_FIELDS as an ordered dictionary
         for field in CURRENT_FIELDS {
 
             if field.value == 0 {
