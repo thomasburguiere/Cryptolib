@@ -57,9 +57,6 @@ class CryptoCompareUtilsTest: XCTestCase {
         XCTAssertEqual(actual2["VOLUME24HOURTO"] as! Float, 1856051459.982464)
 
 
-        print(actual2)
-
-
         let actual4 = CryptoCompareUtils.unpackCurrent(response4)
         XCTAssertEqual(actual4["TOSYMBOL"] as! Substring, "USD")
         XCTAssertEqual(actual4["FROMSYMBOL"] as! Substring, "BTC")
@@ -84,8 +81,6 @@ class CryptoCompareUtilsTest: XCTestCase {
         XCTAssertEqual(actual4["VOLUME24HOURTO"] as! Float, 1855947491.6099107)
         XCTAssertEqual(actual4["VOLUMEHOUR"] as! Float, 151337.52627822058)
         XCTAssertEqual(actual4["VOLUMEHOURTO"] as! Float, 1185139983.8338788)
-
-        print(actual4)
 
     }
 
