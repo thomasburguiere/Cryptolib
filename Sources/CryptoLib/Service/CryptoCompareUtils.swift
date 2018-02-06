@@ -71,7 +71,7 @@ struct CryptoCompareUtils {
                 if CURRENT_FIELDS[property] == 0 {
                     unpackedCurrent[property] = valuesArray[currentFieldIndex];
                     currentFieldIndex += 1;
-                } else if (maskInt != nil && CURRENT_FIELDS[property] != nil) {
+                } else if (maskInt != nil && CURRENT_FIELDS[property] != nil && maskInt!&CURRENT_FIELDS[property]! != 0) {
                     //i know this is a hack, for cccagg, future code please don't hate me:(, i did this to avoid
                     //subscribing to trades as well in order to show the last market
                     if property == "LASTMARKET" {
