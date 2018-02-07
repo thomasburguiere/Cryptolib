@@ -13,7 +13,7 @@ public class Coin: Currency, JSONDecodable {
         self.name = name
     }
 
-    public init(name: String) {
+    public init(_ name: String) {
         self.name = name
     }
 

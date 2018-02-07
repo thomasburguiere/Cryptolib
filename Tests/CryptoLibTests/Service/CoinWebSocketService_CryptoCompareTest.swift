@@ -6,22 +6,22 @@ import XCTest
 
 @testable import CryptoLib
 
-class CryptoCompareWebSocketServiceTest: XCTestCase {
+class CoinWebSocketService_CryptoCompareTest: XCTestCase {
 
     func test_websocket() {
 
         let ex = self.expectation(description: "Fetching succeeds")
 
-        let service = CryptoCompareWebSocketService()
+        let service: CoinWebSocketService = CoinWebSocketService_CryptoCompare()
         var isFulfilled = false
         var receivedMessageCounter = 0
         _ = service.waitForConnect().subscribe(onNext: { noop in
-            service.addSubscriptions(subscriptions: ["5~CCCAGG~BTC~USD"])
-            _ = service.messageUpdateObservable!.subscribe(
-                    onNext: { (result: String ) in
+                service.addSubscriptions(subscriptions: [Subscription.currentAggregateSubscription(from: Coin("BTC"), to: RealCurrency("USD"))])
+            _ = service.obs!.subscribe(
+                    onNext: { (result: SubscriptionResult ) in
                         print("\(receivedMessageCounter + 1): \(result)\n")
                         receivedMessageCounter += 1
-                        if (!result.isEmpty && receivedMessageCounter > 9) {
+                        if (/*!result.isEmpty && */receivedMessageCounter > 9) {
                             self.fulfillOnce(ex: ex, &isFulfilled)
                         }
                     },
@@ -33,7 +33,7 @@ class CryptoCompareWebSocketServiceTest: XCTestCase {
         })
 
 
-        self.wait(for: [ex], timeout: 10.0)
+        self.wait(for: [ex], timeout: 15.0)
 
     }
 

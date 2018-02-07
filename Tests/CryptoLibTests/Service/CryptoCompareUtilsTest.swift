@@ -18,12 +18,12 @@ class CryptoCompareUtilsTest: XCTestCase {
 
     func test_update_data_is_unpacked_correctly() {
         let actual1 = CryptoCompareUtils.unpackCurrent(response1)
-        XCTAssertEqual(actual1["TOSYMBOL"] as! Substring, "USD")
-        XCTAssertEqual(actual1["FROMSYMBOL"] as! Substring, "BTC")
-        XCTAssertEqual(actual1["FLAGS"] as! Substring, "1")
-        XCTAssertEqual(actual1["MARKET"] as! Substring, "CCCAGG")
+        XCTAssertEqual(actual1["TOSYMBOL"] as! String, "USD")
+        XCTAssertEqual(actual1["FROMSYMBOL"] as! String, "BTC")
+        XCTAssertEqual(actual1["FLAGS"] as! String, "1")
+        XCTAssertEqual(actual1["MARKET"] as! String, "CCCAGG")
         XCTAssertNil(actual1["LASTMARKET"])
-        XCTAssertEqual(actual1["TYPE"] as! Substring, "5")
+        XCTAssertEqual(actual1["TYPE"] as! String, "5")
 
         // data obtained by running cryptocompare CCC.CURRENT.unpack(response1) on https://cryptoqween.github.io/streamer/ccc-streamer-utilities.js
         XCTAssertEqual(actual1["PRICE"] as! Float, 7297.99)
@@ -38,12 +38,12 @@ class CryptoCompareUtilsTest: XCTestCase {
 
 
         let actual2 = CryptoCompareUtils.unpackCurrent(response2)
-        XCTAssertEqual(actual2["TOSYMBOL"] as! Substring, "USD")
-        XCTAssertEqual(actual2["FROMSYMBOL"] as! Substring, "BTC")
-        XCTAssertEqual(actual2["FLAGS"] as! Substring, "2")
-        XCTAssertEqual(actual2["MARKET"] as! Substring, "CCCAGG")
+        XCTAssertEqual(actual2["TOSYMBOL"] as! String, "USD")
+        XCTAssertEqual(actual2["FROMSYMBOL"] as! String, "BTC")
+        XCTAssertEqual(actual2["FLAGS"] as! String, "2")
+        XCTAssertEqual(actual2["MARKET"] as! String, "CCCAGG")
         XCTAssertNil(actual2["LASTMARKET"])
-        XCTAssertEqual(actual2["TYPE"] as! Substring, "5")
+        XCTAssertEqual(actual2["TYPE"] as! String, "5")
 
         // data obtained by running cryptocompare CCC.CURRENT.unpack(response2) on https://cryptoqween.github.io/streamer/ccc-streamer-utilities.js
         XCTAssertEqual(actual2["PRICE"] as! Float, 7297.94)
@@ -58,12 +58,12 @@ class CryptoCompareUtilsTest: XCTestCase {
 
 
         let actual4 = CryptoCompareUtils.unpackCurrent(response4)
-        XCTAssertEqual(actual4["TOSYMBOL"] as! Substring, "USD")
-        XCTAssertEqual(actual4["FROMSYMBOL"] as! Substring, "BTC")
-        XCTAssertEqual(actual4["FLAGS"] as! Substring, "4")
-        XCTAssertEqual(actual4["MARKET"] as! Substring, "CCCAGG")
-        XCTAssertEqual(actual4["TYPE"] as! Substring, "5")
-        XCTAssertEqual(actual4["LASTMARKET"] as! Substring, "Bitfinex")
+        XCTAssertEqual(actual4["TOSYMBOL"] as! String, "USD")
+        XCTAssertEqual(actual4["FROMSYMBOL"] as! String, "BTC")
+        XCTAssertEqual(actual4["FLAGS"] as! String, "4")
+        XCTAssertEqual(actual4["MARKET"] as! String, "CCCAGG")
+        XCTAssertEqual(actual4["TYPE"] as! String, "5")
+        XCTAssertEqual(actual4["LASTMARKET"] as! String, "Bitfinex")
 
         // data obtained by running cryptocompare CCC.CURRENT.unpack(response4) on https://cryptoqween.github.io/streamer/ccc-streamer-utilities.js
         XCTAssertEqual(actual4["HIGH24HOUR"] as! Float, 8600.04)

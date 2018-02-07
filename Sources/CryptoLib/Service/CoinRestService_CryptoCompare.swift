@@ -13,7 +13,7 @@ fileprivate enum urls: String {
     case histogramPerMinute = "https://min-api.cryptocompare.com/data/histominute"
 }
 
-public class CryptoCompareCoinService: CoinService {
+public class CoinRestService_CryptoCompare: CoinRestService {
 
     private static let listUrl = "https://min-api.cryptocompare.com/data/all/coinlist"
     private let caller: RestCallerService
@@ -100,5 +100,9 @@ public class CryptoCompareCoinService: CoinService {
             })
         }
         return self.caller.callJsonRESTAsync(url: url).map(responseMapper)
+    }
+
+    public func socialStats(for: Coin) {
+
     }
 }

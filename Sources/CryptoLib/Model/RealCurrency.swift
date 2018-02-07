@@ -7,7 +7,7 @@ import Foundation
 public class RealCurrency: Currency, JSONDecodable {
     public let name: String
 
-    public init(name: String) {
+    public init(_ name: String) {
         self.name = name
     }
 
