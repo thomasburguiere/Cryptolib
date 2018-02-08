@@ -101,8 +101,4 @@ public class CoinRestService_CryptoCompare: CoinRestService {
         }
         return self.caller.callJsonRESTAsync(url: url).map(responseMapper)
     }
-
-    public func socialStats(for: Coin) {
-
-    }
 }

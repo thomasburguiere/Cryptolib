@@ -15,7 +15,7 @@ public class CoinWebSocketService_CryptoCompare: CoinWebSocketService {
     private let socket: SocketIOClient;
     private let disposeBag = DisposeBag()
 
-    init() {
+    public init() {
         self.manager = SocketManager(socketURL: URL(string: "https://streamer.cryptocompare.com")!, config: [.log(false), .compress])
         self.socket = manager.defaultSocket
     }
