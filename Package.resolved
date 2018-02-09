@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/ReactiveX/RxSwift.git",
         "state": {
           "branch": null,
-          "revision": "e479d0029db0575e03e3c092e1c9724b9410eab7",
-          "version": "4.1.1"
+          "revision": "3e848781c7756accced855a6317a4c2ff5e8588b",
+          "version": "4.1.2"
         }
       },
       {
@@ -39,7 +39,7 @@
       },
       {
         "package": "Starscream",
-        "repositoryURL": "https://github.com/daltoniam/Starscream.git",
+        "repositoryURL": "https://github.com/daltoniam/Starscream",
         "state": {
           "branch": null,
           "revision": "6e10c04c8387d00f41a17450fa45b51427971022",
