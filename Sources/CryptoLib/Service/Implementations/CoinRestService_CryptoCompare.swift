@@ -24,7 +24,7 @@ public class CoinRestService_CryptoCompare: CoinRestService {
     }
 
     public func list() -> Observable<Array<Coin>> {
-        return self.caller.callJsonRESTAsync(url: urls.listCoin.rawValue).map({ (jsonDictionary: JSONDictionary) -> Array<Coin> in
+        return self.caller.get(url: urls.listCoin.rawValue).map({ (jsonDictionary: JSONDictionary) -> Array<Coin> in
 
             guard let coinData = jsonDictionary["Data"] as? JSONDictionary else {
                 return []
@@ -51,7 +51,7 @@ public class CoinRestService_CryptoCompare: CoinRestService {
         let targetCurrenciesString: String = targets.reduce(into: "", currencyListSymbolsReducer)
         let url = "\(urls.coinPrice.rawValue)?fsym=\(currency.name)&tsyms=\(targetCurrenciesString)"
 
-        return self.caller.callJsonRESTAsync(url: url).map({ (jsonData: JSONDictionary) in
+        return self.caller.get(url: url).map({ (jsonData: JSONDictionary) in
             var result = CurrencyPrices()
 
             for symbol: String in jsonData.keys {
@@ -68,7 +68,7 @@ public class CoinRestService_CryptoCompare: CoinRestService {
 
         let url = "\(urls.coinMultiprice.rawValue)?fsyms=\(sourceCurrenciesString)&tsyms=\(targetCurrenciesString)"
 
-        return self.caller.callJsonRESTAsync(url: url).map({ (jsonData: JSONDictionary) in
+        return self.caller.get(url: url).map({ (jsonData: JSONDictionary) in
             var result = Dictionary<String, CurrencyPrices>()
 
             for sourceSymbol: String in jsonData.keys {
@@ -100,6 +100,6 @@ public class CoinRestService_CryptoCompare: CoinRestService {
                 return datapoint
             })
         }
-        return self.caller.callJsonRESTAsync(url: url).map(responseMapper)
+        return self.caller.get(url: url).map(responseMapper)
     }
 }
