@@ -5,7 +5,7 @@
 import RxSwift
 
 
-public typealias CurrencyPrices = Dictionary<String, Float>
+public typealias CurrencyPrices = Dictionary<String, Double>
 
 public protocol CoinRestService {
 

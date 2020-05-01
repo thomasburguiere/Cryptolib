@@ -45,7 +45,7 @@ public class CoinWebSocketService_CryptoCompare: CoinWebSocketService {
     }
 
     private static func subscriptionAsCryptoCompareString(_ subs: Array<Subscription>) -> Array<String> {
-        return subs.flatMap({ sub in
+        return subs.compactMap({ sub in
             if sub.kind == .currentAggregate {
                 return "5~CCCAGG~\(sub.from.name)~\(sub.to.name)"
             }
@@ -84,7 +84,7 @@ public class CoinWebSocketService_CryptoCompare: CoinWebSocketService {
 
             guard let from = unpackedResponse["FROMSYMBOL"] as? String,
                   let to = unpackedResponse["TOSYMBOL"] as? String,
-                  let price = unpackedResponse["PRICE"] as? Float else {
+                  let price = unpackedResponse["PRICE"] as? Double else {
                 print("got response without fromSymbol/toSymbol/price: \(unpackedResponse)\n")
                 return
             }

@@ -67,7 +67,7 @@ func unpack(tradeString: String) -> Dictionary<String, Any> {
             if property == "LASTMARKET"{
                 unpackedCurrent[property] = valuesArray[currentField];
             } else {
-                unpackedCurrent[property] = Float(valuesArray[currentField]);
+                unpackedCurrent[property] = Double(valuesArray[currentField]);
             }
             currentField += 1;
         }
