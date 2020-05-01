@@ -33,7 +33,7 @@ class CoinWebSocketService_CryptoCompareTest: XCTestCase {
         })
 
 
-        self.wait(for: [ex], timeout: 15.0)
+        self.wait(for: [ex], timeout: 30.0)
 
     }
 
