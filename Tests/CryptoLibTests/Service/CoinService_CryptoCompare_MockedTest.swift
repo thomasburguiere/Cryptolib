@@ -4,18 +4,21 @@
 
 import XCTest
 import RxSwift
+import Logging
 
 @testable import CryptoLib
 
 
+private let printLogger = PrintLogger()
 class CoinService_CryptoCompareMockedTest: XCTestCase {
+    
 
     func test__mocked__list_returns_empty_array_if_no_Data_entry_in_json() throws {
 
         let callerMock = RestCallerMock(jsonResponseStub: """
         {"test": "aaa"}
         """)
-        let service = CoinRestService_CryptoCompare(caller: callerMock)
+        let service = CoinRestService_CryptoCompare(caller: callerMock, logger: printLogger)
 
         _ = service.list().subscribe(onNext: { coinList in
             XCTAssertTrue(coinList.isEmpty)
@@ -36,7 +39,7 @@ class CoinService_CryptoCompareMockedTest: XCTestCase {
         }
         """
         )
-        let service = CoinRestService_CryptoCompare(caller: callerMock)
+        let service = CoinRestService_CryptoCompare(caller: callerMock, logger: printLogger)
 
         _ = service.list().subscribe(onNext: { coinList in
             XCTAssertFalse(coinList.isEmpty)
@@ -53,6 +56,7 @@ class CoinService_CryptoCompareMockedTest: XCTestCase {
         init(jsonResponseStub jsonString: String) {
             let jsonDictionary: JSONDictionary?? = try? JSONSerialization.jsonObject(with: jsonString.data(using: String.Encoding.utf8)!) as? JSONDictionary
             self.subject = BehaviorSubject(value: jsonDictionary!!)
+            super.init(logger: printLogger)
         }
 
         func resolve() {

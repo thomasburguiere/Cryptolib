@@ -3,8 +3,12 @@
 //
 
 import XCTest
+import Logging
 
 @testable import CryptoLib
+
+
+private let printLogger = PrintLogger()
 
 class CoinWebSocketService_CryptoCompareTest: XCTestCase {
 
@@ -12,14 +16,14 @@ class CoinWebSocketService_CryptoCompareTest: XCTestCase {
 
         let ex = self.expectation(description: "Fetching succeeds")
 
-        let service: CoinWebSocketService = CoinWebSocketService_CryptoCompare()
+        let service: CoinWebSocketService = CoinWebSocketService_CryptoCompare(logger: printLogger)
         var isFulfilled = false
         var receivedMessageCounter = 0
         _ = service.waitForConnect().subscribe(onNext: { noop in
                 service.addSubscriptions(subscriptions: [Subscription.currentAggregateSubscription(from: Coin("BTC"), to: RealCurrency("USD"))])
             _ = service.obs!.subscribe(
                     onNext: { (result: SubscriptionResult ) in
-                        print("\(receivedMessageCounter + 1): \(result)\n")
+                        printLogger.info("\(receivedMessageCounter + 1): \(result)\n")
                         receivedMessageCounter += 1
                         if (/*!result.isEmpty && */receivedMessageCounter > 9) {
                             self.fulfillOnce(ex: ex, &isFulfilled)

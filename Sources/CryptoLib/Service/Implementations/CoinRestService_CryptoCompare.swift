@@ -4,7 +4,7 @@
 
 import Foundation
 import RxSwift
-
+import Logging
 
 fileprivate enum urls: String {
     case listCoin = "https://min-api.cryptocompare.com/data/all/coinlist"
@@ -18,7 +18,7 @@ public class CoinRestService_CryptoCompare: CoinRestService {
     private static let listUrl = "https://min-api.cryptocompare.com/data/all/coinlist"
     private let caller: RestCallerService
 
-    public init(caller: RestCallerService) {
+    public init(caller: RestCallerService, logger: Logger) {
         self.caller = caller
     }
 

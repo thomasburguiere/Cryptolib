@@ -5,17 +5,19 @@
 import Foundation
 import SocketIO
 import RxSwift
-
+import Logging
 
 public class CoinWebSocketService_CryptoCompare: CoinWebSocketService {
 
+    private let logger: Logger
     public var obs: Observable<SubscriptionResult>?
 
     private let manager: SocketManager;
     private let socket: SocketIOClient;
     private let disposeBag = DisposeBag()
 
-    public init() {
+    public init(logger: Logger) {
+        self.logger = logger
         self.manager = SocketManager(socketURL: URL(string: "https://streamer.cryptocompare.com")!, config: [.log(false), .compress])
         self.socket = manager.defaultSocket
     }
@@ -81,14 +83,14 @@ public class CoinWebSocketService_CryptoCompare: CoinWebSocketService {
                 subject.onError(NSError(domain: "", code: 400, userInfo: ["cause": "could not unpack response"]))
                 return
             }
-
+            
             guard let from = unpackedResponse["FROMSYMBOL"] as? String,
-                  let to = unpackedResponse["TOSYMBOL"] as? String,
-                  let price = unpackedResponse["PRICE"] as? Double else {
-                print("got response without fromSymbol/toSymbol/price: \(unpackedResponse)\n")
-                return
+                let to = unpackedResponse["TOSYMBOL"] as? String,
+                let price = unpackedResponse["PRICE"] as? Double else {
+                    self.logger.warning("got response without fromSymbol/toSymbol/price: \(unpackedResponse)\n")
+                    return
             }
-
+            
             subject.onNext(SubscriptionResult(from: Coin(from), to: RealCurrency(to), price: price))
         })
         subject.disposed(by: disposeBag)

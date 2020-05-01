@@ -4,13 +4,16 @@
 
 import XCTest
 import RxSwift
+import Logging
+
 
 @testable import CryptoLib
 
+private let printLogger = PrintLogger()
 
 class CoinService_CryptoCompareTest: XCTestCase {
 
-    private let service = CoinRestService_CryptoCompare(caller: RestCallerService())
+    private let service = CoinRestService_CryptoCompare(caller: RestCallerService(logger: printLogger), logger: printLogger)
 
     func test_list_coins_works() {
 
@@ -35,7 +38,7 @@ class CoinService_CryptoCompareTest: XCTestCase {
 
         let actualObs = service.price(currency: Coin(id: "BTC", name: "BTC"), targets: [RealCurrency("EUR")])
         _ = actualObs.subscribe(onNext: { priceData in
-            print(priceData)
+            printLogger.info(priceData.description)
             XCTAssertNotNil(priceData["EUR"])
             ex.fulfill()
         })
@@ -49,7 +52,7 @@ class CoinService_CryptoCompareTest: XCTestCase {
 
         let actualObs = service.multiprice(sources: [Coin(id: "BTC", name: "BTC"), RealCurrency("EUR")], targets: [RealCurrency("USD"), RealCurrency("EUR")])
         _ = actualObs.subscribe(onNext: { priceData in
-            print(priceData)
+            printLogger.info(priceData.description)
             XCTAssertNotNil(priceData["EUR"])
             XCTAssertNotNil(priceData["EUR"]!["USD"])
             XCTAssertNotNil(priceData["EUR"]!["EUR"])

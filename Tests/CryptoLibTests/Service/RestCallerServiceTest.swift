@@ -4,6 +4,7 @@
 
 import XCTest
 import RxSwift
+import Logging
 
 @testable import CryptoLib
 
@@ -11,7 +12,7 @@ import RxSwift
 class RestCallerServiceTest: XCTestCase {
 
     func test_call_works() {
-        let service = RestCallerService()
+        let service = RestCallerService(logger: PrintLogger())
 
         let actualObservable: Observable<JSONDictionary> = service.callJsonRESTAsync(url: "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY")
 

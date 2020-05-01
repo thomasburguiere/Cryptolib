@@ -4,10 +4,16 @@
 
 import Foundation
 import RxSwift
+import Logging
 
 public class RestCallerService {
 
     private let session: URLSession = URLSession(configuration: URLSessionConfiguration.default)
+    private let logger: Logger
+    
+    public init(logger: Logger){
+        self.logger = logger
+    }
 
     public func callJsonRESTAsync(url: String) -> Observable<JSONDictionary> {
         let url = URL(string: url)
@@ -22,11 +28,11 @@ public class RestCallerService {
                                 observer.onNext(jsonSerialized!)
                                 observer.onCompleted()
                             } catch let error as NSError {
-                                print(error.localizedDescription)
+                                self.logger.error(error.localizedDescription)
                                 observer.onError(error)
                             }
                         } else if let error = error {
-                            print(error.localizedDescription)
+                            self.logger.error(error.localizedDescription)
                             observer.onError(error)
                         }
                     }
