@@ -11,7 +11,7 @@ public protocol JSONDecodable {
 }
 struct JSONUtils {
     static func decode<T: JSONDecodable>(dictionaries: Array<JSONDictionary>) -> Array<T> {
-        return dictionaries.flatMap({ (dictionary: JSONDictionary) -> T? in
+        return dictionaries.compactMap({ (dictionary: JSONDictionary) -> T? in
             return T(dictionary: dictionary)
         })
     }

@@ -92,7 +92,7 @@ public class CoinRestService_CryptoCompare: CoinRestService {
                 return []
             }
 
-            return histoData.flatMap({ (data: JSONDictionary) -> PriceDataPoint? in
+            return histoData.compactMap({ (data: JSONDictionary) -> PriceDataPoint? in
                 guard let datapoint = PriceDataPoint(dictionary: data) else {
                     return nil
                 }

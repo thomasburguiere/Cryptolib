@@ -6,44 +6,35 @@
         "repositoryURL": "https://github.com/ReactiveX/RxSwift.git",
         "state": {
           "branch": null,
-          "revision": "e479d0029db0575e03e3c092e1c9724b9410eab7",
-          "version": "4.1.1"
-        }
-      },
-      {
-        "package": "SSCZLib",
-        "repositoryURL": "https://github.com/daltoniam/zlib-spm.git",
-        "state": {
-          "branch": null,
-          "revision": "83ac8d719a2f3aa775dbdf116a57f56fb2c49abb",
-          "version": "1.1.0"
-        }
-      },
-      {
-        "package": "SSCommonCrypto",
-        "repositoryURL": "https://github.com/daltoniam/common-crypto-spm",
-        "state": {
-          "branch": null,
-          "revision": "2eb3aff0fb57f92f5722fac5d6d20bf64669ca66",
-          "version": "1.1.0"
+          "revision": "002d325b0bdee94e7882e1114af5ff4fe1e96afa",
+          "version": "5.1.1"
         }
       },
       {
         "package": "SocketIO",
-        "repositoryURL": "https://github.com/socketio/socket.io-client-swift",
+        "repositoryURL": "https://github.com/socketio/socket.io-client-swift.git",
         "state": {
           "branch": null,
-          "revision": "d388e1cf037d4dad1a91a6a67ad3bcdd9185d7f3",
-          "version": "13.1.1"
+          "revision": "36db2ff0ebc7239187f9b382fd318e122da71caa",
+          "version": "15.2.0"
         }
       },
       {
         "package": "Starscream",
-        "repositoryURL": "https://github.com/daltoniam/Starscream.git",
+        "repositoryURL": "https://github.com/daltoniam/Starscream",
         "state": {
           "branch": null,
-          "revision": "6e10c04c8387d00f41a17450fa45b51427971022",
-          "version": "3.0.4"
+          "revision": "e6b65c6d9077ea48b4a7bdda8994a1d3c6969c8d",
+          "version": "3.1.1"
+        }
+      },
+      {
+        "package": "swift-nio-zlib-support",
+        "repositoryURL": "https://github.com/apple/swift-nio-zlib-support.git",
+        "state": {
+          "branch": null,
+          "revision": "37760e9a52030bb9011972c5213c3350fa9d41fd",
+          "version": "1.0.0"
         }
       }
     ]
