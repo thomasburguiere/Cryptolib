@@ -62,14 +62,14 @@ struct CryptoCompareUtils {
         if message.hasPrefix("5~") || message.hasPrefix("2~") {
             return unpackCurrent(message)
         }
-        if message.hasPrefix("3~") {
+        if message.hasPrefix("3~") || message.hasPrefix("16~") {
             return ["info" :message]
         }
         return nil
     }
 
     static func unpackCurrent(_ message: String) -> Dictionary<String, Any> {
-        var valuesArray: Array<Substring> = message.split(separator: "~");
+        let valuesArray: Array<Substring> = message.split(separator: "~");
         let mask = valuesArray.last!;
         let maskInt: Int? = Int(mask, radix: 16);
         var unpackedCurrent = Dictionary<String, Any>();
