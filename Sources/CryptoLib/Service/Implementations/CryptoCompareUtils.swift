@@ -86,7 +86,7 @@ struct CryptoCompareUtils {
                 if field.name == "LASTMARKET" {
                     unpackedCurrent[field.name] = valuesArray[currentFieldIndex].description;
                 } else {
-                    unpackedCurrent[field.name] = Float(valuesArray[currentFieldIndex].description);
+                    unpackedCurrent[field.name] = Double(valuesArray[currentFieldIndex].description);
                 }
                 currentFieldIndex += 1;
             }

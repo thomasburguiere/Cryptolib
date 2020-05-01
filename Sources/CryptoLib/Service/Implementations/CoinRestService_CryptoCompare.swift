@@ -54,7 +54,7 @@ public class CoinRestService_CryptoCompare: CoinRestService {
             var result = CurrencyPrices()
 
             for symbol: String in jsonData.keys {
-                result[symbol] = jsonData[symbol] as? Float
+                result[symbol] = (jsonData[symbol] as AnyObject).doubleValue
             }
 
             return result

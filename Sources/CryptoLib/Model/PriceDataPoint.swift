@@ -6,10 +6,10 @@ import Foundation
 
 public class PriceDataPoint: JSONDecodable, CustomStringConvertible {
     let timestamp: Int
-    let close: Float
-    let high: Float
-    let low: Float
-    let open: Float
+    let close: Double
+    let high: Double
+    let low: Double
+    let open: Double
 
     public var description: String {
         return """
@@ -19,12 +19,12 @@ public class PriceDataPoint: JSONDecodable, CustomStringConvertible {
 
     required public init?(dictionary: JSONDictionary) {
         guard let timestamp = dictionary["time"] as? Int,
-              let close = dictionary["close"] as? Float,
-              let high = dictionary["high"] as? Float,
-              let low = dictionary["low"] as? Float,
-              let open = dictionary["open"] as? Float
-                else {
-            return nil
+            let close = (dictionary["close"] as AnyObject).doubleValue,
+            let high = (dictionary["high"] as AnyObject).doubleValue,
+            let low =  (dictionary["low"] as AnyObject).doubleValue,
+            let open = (dictionary["open"] as AnyObject).doubleValue
+            else {
+                return nil
         }
         self.timestamp = timestamp
         self.close = close

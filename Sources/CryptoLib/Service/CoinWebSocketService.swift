@@ -35,9 +35,9 @@ public struct Subscription {
 public struct SubscriptionResult {
     public let from: Coin
     public let to: Currency
-    public let price: Float
+    public let price: Double
 
-    public init(from: Coin, to: Currency, price: Float) {
+    public init(from: Coin, to: Currency, price: Double) {
         self.from = from
         self.to = to
         self.price = price

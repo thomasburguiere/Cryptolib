@@ -84,7 +84,7 @@ public class CoinWebSocketService_CryptoCompare: CoinWebSocketService {
 
             guard let from = unpackedResponse["FROMSYMBOL"] as? String,
                   let to = unpackedResponse["TOSYMBOL"] as? String,
-                  let price = unpackedResponse["PRICE"] as? Float else {
+                  let price = unpackedResponse["PRICE"] as? Double else {
                 print("got response without fromSymbol/toSymbol/price: \(unpackedResponse)\n")
                 return
             }
