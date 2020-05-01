@@ -5,6 +5,7 @@
 import XCTest
 import RxSwift
 import Logging
+import RxRestCaller
 
 @testable import CryptoLib
 
@@ -50,13 +51,12 @@ class CoinService_CryptoCompareMockedTest: XCTestCase {
         callerMock.resolve()
     }
 
-    fileprivate class RestCallerMock: RestCallerService {
+    fileprivate class RestCallerMock: RxRestCaller {
         private let subject: BehaviorSubject<JSONDictionary>
 
         init(jsonResponseStub jsonString: String) {
             let jsonDictionary: JSONDictionary?? = try? JSONSerialization.jsonObject(with: jsonString.data(using: String.Encoding.utf8)!) as? JSONDictionary
             self.subject = BehaviorSubject(value: jsonDictionary!!)
-            super.init(logger: printLogger)
         }
 
         func resolve() {

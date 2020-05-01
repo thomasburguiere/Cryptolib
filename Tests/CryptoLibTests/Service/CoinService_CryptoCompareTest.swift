@@ -5,6 +5,7 @@
 import XCTest
 import RxSwift
 import Logging
+import RxRestCaller
 
 
 @testable import CryptoLib
@@ -13,7 +14,7 @@ private let printLogger = PrintLogger()
 
 class CoinService_CryptoCompareTest: XCTestCase {
 
-    private let service = CoinRestService_CryptoCompare(caller: RestCallerService(logger: printLogger), logger: printLogger)
+    private let service = CoinRestService_CryptoCompare(caller: RxRestCaller(), logger: printLogger)
 
     func test_list_coins_works() {
 

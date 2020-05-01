@@ -5,6 +5,7 @@
 import RxSwift
 import Service
 import Logging
+import RxRestCaller
 
 public typealias CurrencyPrices = Dictionary<String, Double>
 
@@ -20,7 +21,7 @@ public struct CoinRestServiceProvider: Provider {
     public func register(_ services: inout Services) throws {
         services.register(CoinRestService.self) {container in
             return try CoinRestService_CryptoCompare(
-                caller: RestCallerService(logger: self.logger(container)),
+                caller: RxRestCaller(),
                 logger: self.logger(container)
             )
         }

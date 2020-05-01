@@ -20,6 +20,15 @@
         }
       },
       {
+        "package": "RxRestCaller",
+        "repositoryURL": "https://github.com/thomasburguiere/rx-rest-caller.git",
+        "state": {
+          "branch": null,
+          "revision": "52b01296bb178a20b3c3d1fdf9fa8d668b1a2c26",
+          "version": "0.0.2"
+        }
+      },
+      {
         "package": "RxSwift",
         "repositoryURL": "https://github.com/ReactiveX/RxSwift.git",
         "state": {
