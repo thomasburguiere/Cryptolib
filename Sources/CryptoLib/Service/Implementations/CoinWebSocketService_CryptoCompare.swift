@@ -10,7 +10,7 @@ import Logging
 public class CoinWebSocketService_CryptoCompare: CoinWebSocketService {
 
     private let logger: Logger
-    public var obs: Observable<SubscriptionResult>?
+    public var subscriptionResults: Observable<SubscriptionResult>?
 
     private let manager: SocketManager;
     private let socket: SocketIOClient;
@@ -28,7 +28,7 @@ public class CoinWebSocketService_CryptoCompare: CoinWebSocketService {
 
             self.socket.on(clientEvent: .connect, callback: { data, ack in
 
-                self.obs = self.setupMessageObservable()
+                self.subscriptionResults = self.setupMessageObservable()
                 observer.onNext(nil)
             })
 

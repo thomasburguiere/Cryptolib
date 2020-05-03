@@ -23,9 +23,9 @@
         "package": "RxRestCaller",
         "repositoryURL": "https://github.com/thomasburguiere/rx-rest-caller.git",
         "state": {
-          "branch": "master",
-          "revision": "24238f8630c9eadb992654bc419419b09011ff3e",
-          "version": null
+          "branch": null,
+          "revision": "9f2d57fa7d6dec79e2df5c4cb9355d5ae6037442",
+          "version": "0.0.4"
         }
       },
       {

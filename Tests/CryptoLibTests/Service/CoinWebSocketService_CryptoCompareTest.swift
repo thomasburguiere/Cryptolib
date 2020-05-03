@@ -19,13 +19,13 @@ class CoinWebSocketService_CryptoCompareTest: XCTestCase {
         let service: CoinWebSocketService = CoinWebSocketService_CryptoCompare(logger: printLogger)
         var isFulfilled = false
         var receivedMessageCounter = 0
-        _ = service.waitForConnect().subscribe(onNext: { noop in
+        _ = service.waitForConnect().subscribe(onNext: { _ in
                 service.addSubscriptions(subscriptions: [Subscription.currentAggregateSubscription(from: Coin("BTC"), to: RealCurrency("USD"))])
-            _ = service.obs!.subscribe(
+            _ = service.subscriptionResults!.subscribe(
                     onNext: { (result: SubscriptionResult ) in
                         printLogger.info("\(receivedMessageCounter + 1): \(result)\n")
                         receivedMessageCounter += 1
-                        if (/*!result.isEmpty && */receivedMessageCounter > 9) {
+                        if (/*!result.isEmpty && */receivedMessageCounter > 5) {
                             self.fulfillOnce(ex: ex, &isFulfilled)
                         }
                     },

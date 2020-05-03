@@ -17,7 +17,7 @@ let package = Package(
         
         .package(url: "https://github.com/vapor/service.git", from: "1.0.0"),
         .package(url: "https://github.com/vapor/console.git", from: "3.0.0"),
-        .package(url: "https://github.com/thomasburguiere/rx-rest-caller.git", .revision("master")),
+        .package(url: "https://github.com/thomasburguiere/rx-rest-caller.git", from: "0.0.4"),
         .package(url: "https://github.com/socketio/socket.io-client-swift.git", .upToNextMinor(from: "15.2.0"))
 
     ],
