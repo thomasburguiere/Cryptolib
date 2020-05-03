@@ -66,6 +66,10 @@ class CoinService_CryptoCompareMockedTest: XCTestCase {
         override func callJsonRESTAsync(url: String) -> Observable<JSONDictionary> {
             return subject
         }
+        
+        override func get(url: String) -> Observable<JSONDictionary> {
+            return subject
+        }
     }
 
 }
